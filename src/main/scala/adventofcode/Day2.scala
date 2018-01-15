@@ -2,7 +2,7 @@ package adventofcode
 
 object Day2 {
   def checksum(stringSpreadsheet: String): Int = {
-    val spreadsheet = stringSpreadsheet.split("\n").toList.map(_.split(" ").toList.map(_.toInt))
+    val spreadsheet = stringSpreadsheet.split("\n").toList.map(_.split("\\s+").toList.map(_.toInt))
 
    spreadsheet.foldLeft(0)((total, currentRow) => total + rowDifference(currentRow))
   }
