@@ -15,35 +15,42 @@ object Day3 {
   def largerThan(threshold: Int): Int = {
     val pointSurroundings = List((1, 0), (1, -1), (0, -1), (-1, -1), (-1, 0), (-1, 1), (0, 1), (1, 1))
     val matrix = new Matrix
-    var value = 1
-    var position = (0, 0)
-    var direction = Direction("right")
+    val value = 1
+    val position = (0, 0)
+    val direction = Direction("right")
     matrix.put(position, value)
 
-    while (value <= threshold) {
-      position = direction match {
-        case Direction("up")    => position |+| (0, 1)
-        case Direction("right") => position |+| (1, 0)
-        case Direction("down")  => position |+| (0, -1)
-        case Direction("left")  => position |+| (-1, 0)
-      }
+    getLargerValue(matrix, pointSurroundings, threshold, position, direction)
+  }
 
-      value = pointSurroundings.foldLeft(0)((total,offset) => {
-        total + matrix.getOrElse(position |+| offset, 0)
-      })
+  private def getLargerValue(matrix: Matrix, pointSurroundings: List[(Int, Int)], threshold: Int, lastPosition: (Int, Int), direction: Direction): Int = {
+    val position = direction match {
+      case Direction("up")    => lastPosition |+| (0, 1)
+      case Direction("right") => lastPosition |+| (1, 0)
+      case Direction("down")  => lastPosition |+| (0, -1)
+      case Direction("left")  => lastPosition |+| (-1, 0)
+      case Direction(unknown) => throw new IllegalArgumentException(s"Unknown direction $unknown")
+    }
 
-      matrix.put(position, value)
+    val valueAtPosition = pointSurroundings.foldLeft(0)((total,offset) => {
+      total + matrix.getOrElse(position |+| offset, 0)
+    })
 
-      direction = direction match {
+    if (valueAtPosition > threshold) {
+      valueAtPosition
+    } else {
+      matrix.put(position, valueAtPosition)
+
+      val nextDirection = direction match {
         case Direction("up")    if !matrix.contains(position |+| (-1, 0)) => Direction("left")
         case Direction("right") if !matrix.contains(position |+| (0, 1))  => Direction("up")
         case Direction("down")  if !matrix.contains(position |+| (1, 0))  => Direction("right")
         case Direction("left")  if !matrix.contains(position |+| (0, -1)) => Direction("down")
-        case any                                                          => any
+        case lastDirection                                                => lastDirection
       }
-    }
 
-    value
+      getLargerValue(matrix, pointSurroundings, threshold, position, nextDirection)
+    }
   }
 
   private def calculateInwardSteps(dataSquare: Int, depth: Int): Int = {
