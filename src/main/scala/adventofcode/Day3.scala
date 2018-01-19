@@ -13,17 +13,18 @@ object Day3 {
   }
 
   def largerThan(threshold: Int): Int = {
-    val pointSurroundings = List((1, 0), (1, -1), (0, -1), (-1, -1), (-1, 0), (-1, 1), (0, 1), (1, 1))
-    val matrix = new Matrix
+    implicit val pointSurroundings = List((1, 0), (1, -1), (0, -1), (-1, -1), (-1, 0), (-1, 1), (0, 1), (1, 1))
+    implicit val matrix = new Matrix
     val value = 1
     val position = (0, 0)
     val direction = Direction("right")
     matrix.put(position, value)
 
-    getLargerValue(matrix, pointSurroundings, threshold, position, direction)
+    getLargerValue(threshold, position, direction)
   }
 
-  private def getLargerValue(matrix: Matrix, pointSurroundings: List[(Int, Int)], threshold: Int, lastPosition: (Int, Int), direction: Direction): Int = {
+  private def getLargerValue(threshold: Int, lastPosition: (Int, Int), direction: Direction)
+                            (implicit matrix: Matrix, pointSurroundings: List[(Int, Int)]): Int = {
     val position = direction match {
       case Direction("up")    => lastPosition |+| (0, 1)
       case Direction("right") => lastPosition |+| (1, 0)
@@ -49,7 +50,7 @@ object Day3 {
         case lastDirection                                                => lastDirection
       }
 
-      getLargerValue(matrix, pointSurroundings, threshold, position, nextDirection)
+      getLargerValue(threshold, position, nextDirection)
     }
   }
 
