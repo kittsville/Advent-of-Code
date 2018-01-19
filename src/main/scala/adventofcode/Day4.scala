@@ -14,4 +14,10 @@ object Day4 {
 
     passphrases.split("\\n").map(validatePassphrase).count(_ == true)
   }
+
+  def hasNoAnagrams(passphrase: String): Boolean = {
+    val phrases = passphrase.split(" +").map(_.sorted)
+
+    phrases.distinct.length == phrases.length
+  }
 }
