@@ -6,4 +6,12 @@ object Day4 {
 
     phrases.distinct.length == phrases.length
   }
+
+  def countValidPassphrases(passphrases: String): Int = {
+    if (passphrases.length == 0) {
+      return 0
+    }
+
+    passphrases.split("\\n").map(validatePassphrase).count(_ == true)
+  }
 }
