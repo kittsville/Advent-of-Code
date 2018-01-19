@@ -1,7 +1,7 @@
 package adventofcode
 
+import adventofcode.Day4.{countNoAnagramPassphrases, countValidPassphrases, hasNoAnagrams, validatePassphrase}
 import org.specs2._
-import adventofcode.Day4.{validatePassphrase, countValidPassphrases, hasNoAnagrams}
 
 class Day4Spec extends mutable.Specification {
   "Passphrase validator specification where" >> {
@@ -51,6 +51,24 @@ class Day4Spec extends mutable.Specification {
 
     "No anagrams are detected" >> {
       hasNoAnagrams("iiii oiii ooii oooi oooo") must beTrue
+    }
+  }
+
+  "Valid anagram free passphrase counter specification where" >> {
+    "There are no passphrases" >> {
+      countNoAnagramPassphrases("") must_== 0
+    }
+
+    "There are no anagram-free passphrases" >> {
+      val passphrases = "woo owo\naba baa bbb\nkit tik"
+
+      countNoAnagramPassphrases(passphrases) must_== 0
+    }
+
+    "There are two anagram-free passphrases" >> {
+      val passphrases = "woo owo\nfoo bar\nkit kitty"
+
+      countNoAnagramPassphrases(passphrases) must_== 2
     }
   }
 }

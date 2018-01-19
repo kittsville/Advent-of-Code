@@ -20,4 +20,12 @@ object Day4 {
 
     phrases.distinct.length == phrases.length
   }
+
+  def countNoAnagramPassphrases(passphrases: String): Int = {
+    if (passphrases.length == 0) {
+      return 0
+    }
+
+    passphrases.split("\\n").map(hasNoAnagrams).count(_ == true)
+  }
 }
