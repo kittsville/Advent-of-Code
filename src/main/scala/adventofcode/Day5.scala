@@ -4,22 +4,27 @@ import scala.collection.mutable.ArrayBuffer
 
 object Day5 {
   def stepsToEscape(maze: ArrayBuffer[Int]): Int = {
-    var stepsTaken = 0
-    var index      = 0
-    var oldIndex   = 0
-
-    while (index >= 0 && index < maze.length) {
-      stepsTaken += 1
-      oldIndex = index
-      index = index + maze(index)
-      maze(oldIndex) = maze(oldIndex) + 1
+    val incrementer = (offset: Int) => {
+      offset + 1
     }
 
-    stepsTaken
+    calculateSteps(maze, incrementer)
   }
 
 
   def fancyStepsToEscape(maze: ArrayBuffer[Int]): Int = {
+    val incrementer = (offset: Int) => {
+      if (offset >= 3) {
+        offset - 1
+      } else {
+        offset + 1
+      }
+    }
+
+    calculateSteps(maze, incrementer)
+  }
+
+  private def calculateSteps(maze: ArrayBuffer[Int], incrementer: (Int) => Int): Int = {
     var stepsTaken = 0
     var index      = 0
     var oldIndex   = 0
@@ -29,11 +34,7 @@ object Day5 {
       oldIndex = index
       index = index + maze(index)
 
-      if (maze(oldIndex) >= 3) {
-        maze(oldIndex) = maze(oldIndex) - 1
-      } else {
-        maze(oldIndex) = maze(oldIndex) + 1
-      }
+      maze(oldIndex) = incrementer(maze(oldIndex))
     }
 
     stepsTaken
