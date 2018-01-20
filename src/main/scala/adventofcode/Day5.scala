@@ -4,18 +4,17 @@ import scala.collection.mutable.ArrayBuffer
 
 object Day5 {
   def stepsToEscape(maze: ArrayBuffer[Int]): Int = {
-    countSteps(0, maze)
-  }
+    var stepsTaken = 0
+    var index      = 0
+    var oldIndex   = 0
 
-  private def countSteps(index: Int, maze: ArrayBuffer[Int]): Int = {
-    if (index < 0 || index >= maze.length) {
-      return 0
+    while (index >= 0 && index < maze.length) {
+      stepsTaken += 1
+      oldIndex = index
+      index = index + maze(index)
+      maze(oldIndex) = maze(oldIndex) + 1
     }
 
-    val nextIndex = index + maze(index)
-
-    maze(index) = maze(index) + 1
-
-    countSteps(nextIndex, maze) + 1
+    stepsTaken
   }
 }
