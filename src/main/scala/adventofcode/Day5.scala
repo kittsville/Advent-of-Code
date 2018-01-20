@@ -17,4 +17,25 @@ object Day5 {
 
     stepsTaken
   }
+
+
+  def fancyStepsToEscape(maze: ArrayBuffer[Int]): Int = {
+    var stepsTaken = 0
+    var index      = 0
+    var oldIndex   = 0
+
+    while (index >= 0 && index < maze.length) {
+      stepsTaken += 1
+      oldIndex = index
+      index = index + maze(index)
+
+      if (maze(oldIndex) >= 3) {
+        maze(oldIndex) = maze(oldIndex) - 1
+      } else {
+        maze(oldIndex) = maze(oldIndex) + 1
+      }
+    }
+
+    stepsTaken
+  }
 }

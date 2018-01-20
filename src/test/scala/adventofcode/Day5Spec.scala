@@ -1,6 +1,6 @@
 package adventofcode
 
-import adventofcode.Day5.stepsToEscape
+import adventofcode.Day5.{fancyStepsToEscape, stepsToEscape}
 import org.specs2._
 
 import scala.collection.mutable.ArrayBuffer
@@ -21,6 +21,16 @@ class Day5Spec extends mutable.Specification {
 
     "Multiple instructions take multiple steps" >> {
       stepsToEscape(ArrayBuffer(0, 3, 0, 1, -3)) must_== 5
+    }
+  }
+
+  "Fancy maze specification where" >> {
+    "Offsets of three or higher get decremented" >> {
+      fancyStepsToEscape(ArrayBuffer(3, 0, 2, -3)) must_== 4
+    }
+
+    "Multiple instructions take 10 fancy steps" >> {
+      fancyStepsToEscape(ArrayBuffer(0, 3, 0, 1, -3)) must_== 10
     }
   }
 }
