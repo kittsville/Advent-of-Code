@@ -1,6 +1,6 @@
 package adventofcode
 
-import scala.collection.mutable.Set
+import scala.collection.mutable
 
 object Day6 {
   def redistribute(memory: List[Int]): List[Int] = {
@@ -24,7 +24,7 @@ object Day6 {
   }
 
   def loopsUntilRepeat(inputMemory: List[Int]): Int = {
-    val configurations = Set[List[Int]]()
+    val configurations = mutable.Set[List[Int]]()
     var memory = inputMemory
     while(configurations.add(memory)) {
       memory = redistribute(memory)
