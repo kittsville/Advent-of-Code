@@ -10,7 +10,7 @@ class Day6Spec extends mutable.Specification {
     }
 
     "Memory is oddly distributed if banks and imbalance aren't equal" >> {
-      redistribute(List(0,0,0,1)) must_== List(1,0,0,0)
+      redistribute(List(0,0,0,2)) must_== List(1,1,0,0)
     }
 
     "Memory requires multiple passes to redistribute if banks and imbalance are equal" >> {
