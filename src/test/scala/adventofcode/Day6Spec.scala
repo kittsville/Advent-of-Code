@@ -24,5 +24,9 @@ class Day6Spec extends mutable.Specification {
     "Memory is redistributed across banks that already contain blocks" >> {
       redistribute(List(1,2,3)) must_== List(2,3,1)
     }
+
+    "Memory is redistributed from the first bank" >> {
+      redistribute(List(4,0,0)) must_== List(1,2,1)
+    }
   }
 }
