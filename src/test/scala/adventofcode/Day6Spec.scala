@@ -1,6 +1,6 @@
 package adventofcode
 
-import adventofcode.Day6.redistribute
+import adventofcode.Day6.{redistribute,loopsUntilRepeat}
 import org.specs2._
 
 class Day6Spec extends mutable.Specification {
@@ -27,6 +27,16 @@ class Day6Spec extends mutable.Specification {
 
     "Memory is redistributed from the first bank" >> {
       redistribute(List(4,0,0)) must_== List(1,2,1)
+    }
+  }
+
+  "Redistribution cycle specification where" >> {
+    "The configuration repeats after two loops" >> {
+      loopsUntilRepeat(List(1,0)) must_== 2
+    }
+
+    "The configuration repeats after 5 loops" >> {
+      loopsUntilRepeat(List(0,2,7,0)) must_== 5
     }
   }
 }

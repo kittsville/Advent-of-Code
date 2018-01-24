@@ -1,5 +1,7 @@
 package adventofcode
 
+import scala.collection.mutable.Set
+
 object Day6 {
   def redistribute(memory: List[Int]): List[Int] = {
     val max = memory.max
@@ -19,5 +21,15 @@ object Day6 {
     }
 
     (memory.updated(indexOfMax,0), redistributed).zipped.map(_ + _)
+  }
+
+  def loopsUntilRepeat(inputMemory: List[Int]): Int = {
+    val configurations = Set[List[Int]]()
+    var memory = inputMemory
+    while(configurations.add(memory)) {
+      memory = redistribute(memory)
+    }
+
+    configurations.size
   }
 }
