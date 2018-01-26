@@ -18,7 +18,7 @@ class Day7Spec extends mutable.Specification {
       val input = List(
         "ktlj (57)",
         "fwft (72) -> ktlj",
-        "ajbf (72) -> fwft"
+        "ajbf (86) -> fwft"
       )
 
       getBottom(input) must_== "ajbf"
