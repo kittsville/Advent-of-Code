@@ -1,18 +1,28 @@
 package adventofcode
 
 object Day7 {
-  private val robot = "^([a-z]+) \\(\\d+\\) -> (.+)$".r
+  private val parseSupportRobot = "^([a-z]+).*".r
+  private val parseSupportedRobots = ".*-> ([a-z ,]+)$".r
 
   def getBottom(tower: List[String]): String = {
-    val foo = tower.flatMap(parseRobotInfo).foldLeft((Set[String](), Set[String]()))((left, right) => (left._1 + right._1, left._2 ++ right._2))
+    val supports = tower.filterNot(_.endsWith(")"))
+    val supportingRobots = supports.foldLeft(Set[String]())(getSupportingRobots)
+    val supportedRobots  = supports.foldLeft(Set[String]())(getSupportedRobots)
 
-    (foo._1 -- foo._2).last
+    (supportingRobots -- supportedRobots).lastOption.get
   }
 
-  private def parseRobotInfo(robotInfo: String): Option[(String, Set[String])] = {
-    robotInfo match {
-      case robot(bottomRobot, supportedRobots) => Some((bottomRobot, supportedRobots.split(", ").toSet))
-      case _ => None
+  private def getSupportingRobots(supportingRobots: Set[String], rawSupport: String): Set[String] = {
+    rawSupport match {
+      case parseSupportRobot(robot) => supportingRobots + robot
+      case _ => supportingRobots
+    }
+  }
+
+  private def getSupportedRobots(supportedRobots: Set[String], rawSupport: String): Set[String] = {
+    rawSupport match {
+      case parseSupportedRobots(robots) => supportedRobots ++ robots.split(", ").toSet
+      case _ => supportedRobots
     }
   }
 }
