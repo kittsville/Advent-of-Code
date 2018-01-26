@@ -1,6 +1,6 @@
 package adventofcode
 
-import adventofcode.Day6.{redistribute,loopsUntilRepeat}
+import adventofcode.Day6.{loopsBetweenRepeat, loopsUntilRepeat, redistribute}
 import org.specs2._
 
 class Day6Spec extends mutable.Specification {
@@ -37,6 +37,16 @@ class Day6Spec extends mutable.Specification {
 
     "The configuration repeats after 5 loops" >> {
       loopsUntilRepeat(List(0,2,7,0)) must_== 5
+    }
+  }
+
+  "Cycle counter specification where" >> {
+    "There are four loops between the repeating configurations" >> {
+      loopsBetweenRepeat(List(0,2,7,0)) must_== 4
+    }
+
+    "There are three loops between the repeating configurations" >> {
+      loopsBetweenRepeat(List(1,0,0)) must_== 3
     }
   }
 }

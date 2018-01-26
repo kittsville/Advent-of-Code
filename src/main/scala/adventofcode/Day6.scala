@@ -32,4 +32,16 @@ object Day6 {
 
     configurations.size
   }
+
+  def loopsBetweenRepeat(inputMemory: List[Int]): Int = {
+    val configurations = mutable.Set[List[Int]]()
+    val configOrder    = mutable.HashMap[List[Int], Int]()
+    var memory = inputMemory
+    while(configurations.add(memory)) {
+      configOrder.put(memory, configurations.size)
+      memory = redistribute(memory)
+    }
+
+    1 + configurations.size - configOrder(memory)
+  }
 }
