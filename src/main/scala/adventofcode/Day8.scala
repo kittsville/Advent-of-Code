@@ -16,7 +16,7 @@ object Day8 {
     instructions.foreach {
       {
         case parseInstruction(register, "inc", offset, cmpRegister, comparison, compareTo) if conditionHolds(cmpRegister, comparison, compareTo.asInt) => registry.put(register, registry(register) + offset.asInt)
-        case parseInstruction(register, "dec", offset) => registry.put(register, registry(register) - offset.asInt)
+        case parseInstruction(register, "dec", offset, cmpRegister, comparison, compareTo) if conditionHolds(cmpRegister, comparison, compareTo.asInt) => registry.put(register, registry(register) - offset.asInt)
         case parseInstruction(_, "inc", _, _, _, _) =>
         case parseInstruction(_, "dec", _, _, _, _) =>
         case invalid => throw new MatchError(s"Invalid instruction: '$invalid'")
